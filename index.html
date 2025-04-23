@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IoT Dashboard by Zhafif</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Inter -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Custom Style -->
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+        background: linear-gradient(to bottom right, #0f172a, #1e293b);
+      }
+
+      .doy-card {
+        background: rgba(15, 23, 42, 0.7);
+        border: 1px solid rgba(74, 222, 128, 0.1);
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+      }
+
+      .doy-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(74, 222, 128, 0.3);
+      }
+
+      .doy-pill {
+        transition: all 0.3s ease;
+      }
+
+      .doy-pill.active {
+        background: rgba(60, 184, 222, 0.2);
+        border-left: 3px solid #60A5FA;
+      }
+
+      .doy-badge {
+        background: rgba(74, 222, 128, 0.1);
+      }
+
+      .doy-badge.animate {
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0%, 100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+        50% {
+          transform: scale(1.05);
+          opacity: 0.7;
+        }
+      }
+
+      .signature {
+        font-family: 'Bad Script', cursive;
+        color: #60A5FA;
+      }
+    </style>
+  </head>
+
+  <body class="min-h-screen flex items-center justify-center p-4 text-white">
+    <div class="w-full max-w-6xl rounded-2xl overflow-hidden shadow-xl flex flex-col md:flex-row bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700/50">
+      <!-- Sidebar -->
+      <aside class="p-6 w-full md:w-64 flex-shrink-0 border-r border-gray-700/50">
+        <div class="flex items-center space-x-3 mb-10">
+          <div class="p-3 bg-blue-500/10 rounded-xl">
+            <i class="fas fa-heart text-blue-400 text-xl"></i>
+          </div>
+          <h2 class="text-xl font-bold text-white">
+            <span class="text-blue-400">IoT</span>Dash
+          </h2>
+        </div>
+        <nav class="space-y-2">
+          <a href="#" class="doy-pill active flex items-center space-x-3 px-4 py-3 rounded-lg text-white">
+            <i class="fas fa-fire text-blue-400 w-5"></i><span>Live Data</span>
+          </a>
+          <a href="#" class="doy-pill flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-300 hover:text-white">
+            <i class="fas fa-cogs w-5"></i><span>Settings</span>
+          </a>
+          <a href="#" class="doy-pill flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-300 hover:text-white">
+            <i class="fas fa-history w-5"></i><span>History</span>
+          </a>
+        </nav>
+        <div class="mt-auto pt-8 text-xs text-gray-400 text-center">
+          Dibuat dengan <i class="fas fa-heart text-red-400 mx-1"></i> oleh <span class="signature">Zhapip</span>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-1 p-6 md:p-8">
+        <!-- Header -->
+        <header class="mb-8">
+          <h1 class="text-2xl md:text-3xl font-bold text-white">
+            Selamat Datang di <span class="text-green-400">IoT Dashboard</span>
+          </h1>
+          <p class="text-gray-400 mt-2">Monitoring dengan simpel</p>
+        </header>
+
+        <!-- Cards -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <!-- Temperature -->
+          <div class="doy-card rounded-xl p-6">
+            <div class="flex items-center justify-between mb-4 text-sm font-medium text-gray-400">
+              <h2><i class="fas fa-thermometer-half text-red-400 mr-2"></i>SUHU RUANGAN</h2>
+              <i class="fas fa-sync-alt text-gray-500 animate-spin"></i>
+            </div>
+            <p id="temperature" class="temperature text-4xl font-bold text-white mb-1"></p>
+            <p class="timestamp text-xs text-gray-400"><i class="far fa-clock mr-1"></i>Updated: <span id="timestamp">Just Now</span></p>
+          </div>
+
+          <!-- Humidity -->
+          <div class="doy-card rounded-xl p-6">
+            <div class="flex items-center justify-between mb-4 text-sm font-medium text-gray-400">
+              <h2><i class="fas fa-tint text-blue-400 mr-2"></i>KELEMBAPAN</h2>
+              <span class="text-xs bg-blue-900/30 text-blue-400 px-2 py-1 rounded-full">Stable</span>
+            </div>
+            <p id="humidity" class="humidity text-4xl font-bold text-blue-300 mb-1">65%</p>
+            <p class="text-xs text-gray-400"><i class="fas fa-info-circle mr-1"></i>Ideal range: 40-70%</p>
+          </div>
+
+          <!-- Device Status -->
+          <div class="doy-card rounded-xl p-6">
+            <div class="flex items-center justify-between mb-4 text-sm font-medium text-gray-400">
+              <h2><i class="fas fa-plug text-green-400 mr-2"></i>STATUS PERANGKAT</h2>
+            </div>
+            <div class="flex items-center">
+              <div class="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></div>
+              <span class="text-xs text-green-400">Online</span>
+            </div>
+            <p class="text-xl font-bold text-white">ESP32</p>
+            <p class="text-xs text-gray-400 mt-1"><i class="fas fa-code-branch mr-1"></i>Firmware: v2.1.8</p>
+          </div>
+        </section>
+
+        <!-- Footer -->
+        <div class="mt-10 pt-6 border-t border-gray-700/30 text-center text-xs text-gray-500">
+          Dashboard ini dibuat dengan <i class="fas fa-heart text-red-400 mx-1"></i> oleh <span class="signature">Zhapip</span>
+        </div>
+      </main>
+    </div>
+    <script>
+      async function fetchData() {
+        try{
+          const response = await fetch('read.php');
+          if (!response.ok) throw new Error("Gagal fetch data");
+          const data = await response.json();
+          document.getElementById('temperature').textContent = data.temperature;
+          document.getElementById('humidity').textContent = data.humidity;
+          document.getElementById('timestamp').textContent = data.timestamp;
+        } catch (error) {
+          console.error("Error:", error);
+          document.getElementById('status').textContent = "Error!";
+        }
+      }
+      setInterval(fetchData, 1000);
+      fetchData();
+    </script>
+  </body>
+</html>

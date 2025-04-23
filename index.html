@@ -34,6 +34,12 @@
         transition: all 0.3s ease;
       }
 
+      .doy-card::after{
+        content: '';
+        position: absolute;
+        height: 100%;
+      }
+
       .doy-card:hover {
         transform: translateY(-5px);
         box-shadow: 0 10px 25px rgba(74, 222, 128, 0.3);
@@ -107,7 +113,7 @@
         <!-- Header -->
         <header class="mb-8">
           <h1 class="text-2xl md:text-3xl font-bold text-white">
-            Selamat Datang di <span class="text-green-400">IoT Dashboard</span>
+            Selamat Datang di <span class="text-blue-400">IoT Dashboard</span>
           </h1>
           <p class="text-gray-400 mt-2">Monitoring dengan simpel</p>
         </header>
@@ -118,17 +124,19 @@
           <div class="doy-card rounded-xl p-6">
             <div class="flex items-center justify-between mb-4 text-sm font-medium text-gray-400">
               <h2><i class="fas fa-thermometer-half text-red-400 mr-2"></i>SUHU RUANGAN</h2>
-              <i class="fas fa-sync-alt text-gray-500 animate-spin"></i>
             </div>
-            <p id="temperature" class="temperature text-4xl font-bold text-white mb-1"></p>
+            <div class="flex items-center justify-between mb-4">
+              <p id="temperature" class="temperature text-4xl font-bold text-red-400 mb-1"></p>
+              <i id="fanIcon" class="fas fa-fan fa-2x text-white animate-spin"></i>
+            </div>
             <p class="timestamp text-xs text-gray-400"><i class="far fa-clock mr-1"></i>Updated: <span id="timestamp">Just Now</span></p>
           </div>
 
           <!-- Humidity -->
           <div class="doy-card rounded-xl p-6">
             <div class="flex items-center justify-between mb-4 text-sm font-medium text-gray-400">
-              <h2><i class="fas fa-tint text-blue-400 mr-2"></i>KELEMBAPAN</h2>
-              <span class="text-xs bg-blue-900/30 text-blue-400 px-2 py-1 rounded-full">Stable</span>
+              <h2><i class="fas fa-tint text-blue-400 animate-bounce mr-2"></i>KELEMBAPAN</h2>
+              <span id="beat" class="text-xs bg-blue-900/30 text-blue-400 px-2 py-1 rounded-full fa-beat">Stable</span>
             </div>
             <p id="humidity" class="humidity text-4xl font-bold text-blue-300 mb-1">65%</p>
             <p class="text-xs text-gray-400"><i class="fas fa-info-circle mr-1"></i>Ideal range: 40-70%</p>
@@ -163,6 +171,20 @@
           document.getElementById('temperature').textContent = data.temperature;
           document.getElementById('humidity').textContent = data.humidity;
           document.getElementById('timestamp').textContent = data.timestamp;
+
+          if (parseFloat(data.temperature) >= 30) {
+            fanIcon.classList.add('animate-spin');
+          } else {
+            fanIcon.classList.remove('animate-spin');
+          }
+
+          const temp = perseFloat(data.humidity);
+          if (temp >= 40 && temp <= 70) {
+            beat.classList.add('fa-beat');
+          } else {
+            beat.classList.remove('fa.beat');
+          }
+          
         } catch (error) {
           console.error("Error:", error);
           document.getElementById('status').textContent = "Error!";
